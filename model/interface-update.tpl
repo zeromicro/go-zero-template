@@ -1,1 +1,1 @@
-Update(data *{{.upperStartCamelObject}}) error
+Update(ctx context.Context, newData *{{.upperStartCamelObject}}) error

@@ -15,15 +15,13 @@ spec:
     metadata:
       labels:
         app: {{.Name}}
-    spec:
+    spec:{{if .ServiceAccount}}
+      serviceAccountName: {{.ServiceAccount}}{{end}}
       containers:
       - name: {{.Name}}
         image: {{.Image}}
-        lifecycle:
-          preStop:
-            exec:
-              command: ["sh","-c","sleep 5"]
-        ports:
+        {{if .ImagePullPolicy}}imagePullPolicy: {{.ImagePullPolicy}}
+        {{end}}ports:
         - containerPort: {{.Port}}
         readinessProbe:
           tcpSocket:

@@ -9,8 +9,9 @@ spec:
   jobTemplate:
     spec:
       template:
-        spec:
-          containers:
+        spec:{{if .ServiceAccount}}
+          serviceAccountName: {{.ServiceAccount}}{{end}}
+	      {{end}}containers:
           - name: {{.Name}}
             image: # todo image url
             resources:

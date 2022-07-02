@@ -1,7 +1,6 @@
-
 syntax = "v1"
 
-info(
+info (
 	title: // TODO: add title
 	desc: // TODO: add description
 	author: "{{.gitUser}}"

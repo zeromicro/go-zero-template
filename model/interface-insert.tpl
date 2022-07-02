@@ -1,1 +1,1 @@
-Insert(data *{{.upperStartCamelObject}}) (sql.Result,error)
+Insert(ctx context.Context, data *{{.upperStartCamelObject}}) (sql.Result,error)

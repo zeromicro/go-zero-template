@@ -1,6 +1,6 @@
 
 type (
-	{{.upperStartCamelObject}}Model interface{
+	{{.lowerStartCamelObject}}Model interface{
 		{{.method}}
 	}
 

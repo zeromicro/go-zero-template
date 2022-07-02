@@ -11,7 +11,7 @@ type ServiceContext struct {
 
 func NewServiceContext(c {{.config}}) *ServiceContext {
 	return &ServiceContext{
-		Config: c, 
+		Config: c,
 		{{.middlewareAssignment}}
 	}
 }

@@ -1,6 +1,5 @@
-
 type Request {
-  Name string `path:"name,options=you|me"` 
+  Name string `path:"name,options=you|me"`
 }
 
 type Response {
