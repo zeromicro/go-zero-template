@@ -3,6 +3,8 @@ package {{.PkgName}}
 import (
 	"net/http"
 
+	"bcare/common/bresult"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 	{{.ImportPackages}}
 )
