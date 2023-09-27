@@ -1,12 +1,18 @@
 
-func (m *default{{.upperStartCamelObject}}Model) Insert(data *{{.upperStartCamelObject}}) (sql.Result,error) {
-	{{if .withCache}}{{if .containsIndexCache}}{{.keys}}
-    ret, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
-		return conn.Exec(query, {{.expressionValues}})
-	}, {{.keyValues}}){{else}}query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
-    ret,err:=m.ExecNoCache(query, {{.expressionValues}})
-	{{end}}{{else}}query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
-    ret,err:=m.conn.Exec(query, {{.expressionValues}}){{end}}
-	return ret,err
+func (m *default{{.upperStartCamelObject}}Model) Insert(ctx context.Context,session sqlx.Session, data *{{.upperStartCamelObject}}) (sql.Result,error) {
+	data.DeleteTime = time.Unix(0,0)
+	data.IsDelete = xconst.DelStateNo
+	{{if .withCache}}{{.keys}}
+	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+	query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
+	if session != nil{
+		return session.ExecCtx(ctx,query,{{.expressionValues}})
+	}
+	return conn.ExecCtx(ctx, query, {{.expressionValues}})
+	}, {{.keyValues}}){{else}}
+	query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
+	if session != nil{
+		return session.ExecCtx(ctx,query,{{.expressionValues}})
+	}
+	return m.conn.ExecCtx(ctx, query, {{.expressionValues}}){{end}}
 }

@@ -1,1 +1,1 @@
-Delete({{.lowerStartCamelPrimaryKey}} {{.dataType}}) error
+Delete(ctx context.Context,session sqlx.Session, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) error
